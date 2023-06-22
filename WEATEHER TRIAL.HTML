@@ -134,6 +134,31 @@ body
 </head>
 
 <body>
+  
+    
+      <h1>Weather Information</h1>
+      <form id="weatherForm">
+        <input type="text" id="locationInput" placeholder="Enter location">
+        <button type="button"
+onclick="document.getElementById('locationInput').innerHTML = location()">
+Click me to display city and location.</button>
+
+<p id="demo"></p>
+
+        <button type="submit">Search</button>
+        <button type="button"
+onclick="document.getElementById('demo').innerHTML = Date()">
+Click me to display Date and Time.</button>
+
+<p id="demo"></p>
+
+      </form>
+      <div id="weatherData"></div>
+    
+      <script src="weather.js"></script>
+    </body>
+    </html>
+
   <div class="container-fluid">
     <section class="main">
       <section class="inputs">
