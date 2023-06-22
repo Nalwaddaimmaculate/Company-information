@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+    crossorigin="anonymous">
+    <script>
+        //get data from openweather
+        async function getWeather(){
+                //get the city name
+                //console.log( document.getElementById("cityname").value);//gets the text
+                let cityCheck = document.getElementById("cityname").value;
+                //send it to the server to fetch
+                let myurl = `https://api.openweathermap.org/data/2.5/weather?q=${cityCheck}&appid=93f26e3c57081a6210de53b8dcfdfea4`;
+                //fetch returns a response object, get json
+                await fetch(myurl).then( resp => {return resp.json();}).then(showweather);
+                //display it
+        }
+        function showweather(data){
+                console.log(data);
+                document.getElementById("city").textContent = data.name;                
+                document.getElementById("high-temp").textContent = convertTemp(data.main.temp_max);
+                document.getElementById("low-temp").textContent = convertTemp(data.main.temp_min);
+               
+                document.getElementById("w").textContent = data.weather[0].main;
+                let myimg = data.weather[0].icon+".png";
+                document.getElementById("divimg").innerHTML = `<img src='http://openweathermap.org/img/w/${myimg}' alt='image here' />`;
+        }
+
+
+        function convertTemp(K){
+            K = parseInt(K);
+            let F = (K - 273.15) * 9/5 + 32;
+            F = Math.floor(F);
+            return F+' F ';
+        }
+
+
+
+
+    </script>
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body
+{
+    background: #116396;
+}
+.container-fluid
+{
+    width: 400px;
+    margin: 60px auto;
+    padding: 10px;
+}
+.inputs 
+{
+    padding: 2rem 0 2rem 0;
+    text-align: center;
+    justify-content: center;
+    background: white;
+}
+.inputs input[type="text"] 
+{
+    height: 4rem;
+    width: 20rem;
+    background: #212121;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    border: 2px solid #c2c2c2;
+    border-radius: 2px;
+    margin-right:4px ;
+}
+.inputs input[type="submit"] 
+{
+    height: 3rem;
+    width: 6rem;
+    background: #0a67ca;
+    font-weight: bold;
+    color: white;
+    font-size: 1rem;
+    margin-top: 20px;
+    border: none;
+    border-radius: 2px;
+}
+.display 
+{
+    text-align: center;
+    width: 400px;
+    color: #16a864;
+}
+.wrapper 
+{
+    margin: 0 9rem;
+    background-color: white;
+    height: 45vh;
+    margin: 50px auto;
+    border-radius: 2px;
+}
+
+.wrapper h2
+{
+    padding: 5px 0;
+    text-align: center;
+    background: #0548b5;
+    color: white;
+    font-family: sans-serif;
+}
+.wrapper p
+{
+    margin:20px 50px;
+    margin-right: 20px;
+    text-align: left;
+    color: #04214c;
+    font-size:23px;
+}
+.wrapper h2 span
+{
+    font-size: 26px;
+    color: #9beefb;
+}
+.wrapper p span
+{
+    color: #f4780d;
+    font-size: 25px;
+}
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <section class="main">
+      <section class="inputs">
+        <input type="text" placeholder="Enter any city..." id="cityinput">
+        <input type="submit" value="Submit" id="add">
+        <button placeholder="submit" id="add"></button>
+      </section>
+
+      <section class="display">
+        <div class="wrapper">
+          <h2 id="cityoutput"></h2>
+          <p id="description"></p>
+          <p id="temp"></p>
+          <p id="wind"></p>
+        </div>
+      </section>
+    </section>
+
+  </div>
+</body>
+
+</html>
