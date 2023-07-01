@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Weather Application</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+   integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+   <div class="container-fluid">
+       <h1>Weather or Not Weather</h1>
+       <input type="text" name="cityname" id="cityname" />
+       <button onclick="getWeather()" class="btn btn-success">Get Weather</button>
+       <div>
+           <h3>City</h3>
+           <span id="city">Name here</span>
+           <h3>Max Temp</h3>
+           <span id="high-temp">High here</span>
+           <h3>Min Temp</h3>
+           <span id="low-temp">Low here</span>
+           <h3>Weather</h3>
+           <span id="w">Weather here</span>
+           <div id="cityImage"></div>
+       </div>
+   </div>
+   <script>
+       async function getWeather() {
+           let city = document.getElementById("cityname").value;
+           let apiKey = "93f26e3c57081a6210de53b8dcfdfea4";
+           let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+
+           try {
+               let response = await fetch(apiUrl);
+               let data = await response.json();
+               showWeather(data);
+               getCityImage(city);
+           } catch (error) {
+               console.log(error);
+           }
+       }
+
+
+       function showWeather(data) {
+           console.log(data);
+           document.getElementById("city").textContent = data.name;
+           document.getElementById("high-temp").textContent = convertTemp(data.main.temp_max);
+           document.getElementById("low-temp").textContent = convertTemp(data.main.temp_min);
+           document.getElementById("w").textContent = data.weather[0].main;
+       }
+
+
+       function convertTemp(K) {
+           let F = Math.floor((K - 273.15) * 9 / 5 + 32);
+           return F + ' °F';
+       }
+
+
+       function getCityImage(city) {
+           let imageUrl = `https://source.unsplash.com/200x200/?${city}`;
+           let cityImage = document.getElementById("cityImage");
+           cityImage.innerHTML = `<img src="${imageUrl}" alt="City Image" />`;
+       }
+   </script>
+</body>
+</html>
